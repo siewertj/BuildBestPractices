@@ -1,0 +1,8 @@
+get_filename_component(@PROJECT_NAME@_CMAKE_DIR
+	"${CMAKE_CURRENT_LIST_FILE}" PATH
+)
+
+if (NOT TARGET @NAMESPACE@@PROJECT_NAME@)
+	include("${@PROJECT_NAME@_CMAKE_DIR}/@PROJECT_NAME@Targets.cmake")
+endif()
+
