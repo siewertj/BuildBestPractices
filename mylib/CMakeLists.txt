@@ -4,7 +4,9 @@ cmake_minimum_required(VERSION 3.6)
 
 # Basically the executable/lib name. Use PROJECT_NAME to access and
 #  CMAKE_PROJECT_NAME for the top level project name.
-project(MyProject)
+project(MyProject
+	VERSION 0.0.1
+)
 
 set(${PROJECT_NAME}_API
 	mylib.h
@@ -25,6 +27,17 @@ target_include_directories(${PROJECT_NAME}
 
 
 ###### INSTALL ######
+
+# This is included to help make package creation easier.
+include(CMakePackageConfigHelpers)
+
+# Use the function in the ConfigHelper file to create a version config file
+write_basic_package_version_file(
+	${CMAKE_CURRENT_BINARY_DIR}/${PROJECT_NAME}ConfigVersion.cmake
+	VERSION ${${PROJECT_NAME}_VERSION}
+	COMPATIBILITY AnyNewerVersion
+)
+
 
 # This installs the project target and exports the project so we can install the targets.cmake
 install(TARGETS ${PROJECT_NAME} EXPORT ${PROJECT_NAME}-export
@@ -53,6 +66,9 @@ configure_file(Config.cmake.in
 	${CMAKE_CURRENT_BINARY_DIR}/${PROJECT_NAME}Config.cmake
 	@ONLY NEWLINE_STYLE LF
 )
-install(FILES ${CMAKE_CURRENT_BINARY_DIR}/${PROJECT_NAME}Config.cmake
+install(
+	FILES
+		${CMAKE_CURRENT_BINARY_DIR}/${PROJECT_NAME}Config.cmake
+		${CMAKE_CURRENT_BINARY_DIR}/${PROJECT_NAME}ConfigVersion.cmake
 	DESTINATION cmake
 )
