@@ -4,10 +4,11 @@ cmake_minimum_required(VERSION 3.6)
 
 # Basically the executable/lib name. Use PROJECT_NAME to access and
 #  CMAKE_PROJECT_NAME for the top level project name.
+include(version_file)
 project(MyProject
-	VERSION 0.0.1
+	VERSION 0.0.6
 )
-
+message("${${PROJECT_NAME}_VERSION}")
 set(${PROJECT_NAME}_API
 	mylib.h
 )

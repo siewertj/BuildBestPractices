@@ -32,8 +32,25 @@ else()
 	string(STRIP "${GIT_BRANCH}" GIT_BRANCH)
 endif()
 
+set(VERSION
+"const char* GIT_REV=\"${GIT_REV}${GIT_DIFF}\";
+const char* GIT_TAG=\"${GIT_TAG}\";
+const char* GIT_BRANCH=\"${GIT_BRANCH}\";")
+
+
+#if (EXISTS ${CMAKE_CURRENT_SOURCE_DIR}/version.cpp
+	#file(READ ${CMAKE_CURRENT_SOURCE_DIR}/version.cpp VERSION_)
+#else()
+	#set(VERSION_ "")
+#endif()
+#if (NOT "${VERSION}" STREQUAL "${VERSION_}")
+	#file(WRITE ${CMAKE_CURRENT_SOURCE_DIR}/version.cpp "${VERSION}")
+#endif()
+
 message("${GIT_REV}")
 message("${GIT_DIFF}")
 message("${GIT_TAG}")
 message("${GIT_BRANCH}")
+
+message("${VERSION}")
 
