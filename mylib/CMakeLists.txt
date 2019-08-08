@@ -72,3 +72,4 @@ install(
 		${CMAKE_CURRENT_BINARY_DIR}/${PROJECT_NAME}ConfigVersion.cmake
 	DESTINATION cmake
 )
+
