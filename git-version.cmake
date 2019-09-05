@@ -1,6 +1,8 @@
 #find_program(GIT_CMD git)
 set(GIT_CMD git)
 
+#add_custom_command()
+#add_custom_target()
 # Command to possibly get the date
 #  git log -1 --format=%cd
 
