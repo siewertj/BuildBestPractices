@@ -1,14 +1,21 @@
-set(ManifestFile "install_manifest.txt")
-set(RootDir "")
+function(create_zip_package)
+	set(options )
+	set(oneValueArgs OUTFILE)
+	set(multiValueArgs )
+	cmake_parse_arguments(args "${options}" "${oneValueArgs}" "${multiValueArgs}" ${ARGN} )
 
-file(STRINGS ${ManifestFile} CONTENTS) 
-set(InstallList "")
-foreach(filepath ${CONTENTS})
-	file(RELATIVE_PATH filepath_rel ${RootDir} ${filepath})
-	list(APPEND InstallList ${filepath_rel})
-endforeach()
+	set(ManifestFile "${CMAKE_BINARY_DIR}/install_manifest.txt")
+	set(RootDir ${CMAKE_INSTALL_PREFIX})
 
-execute_process(
-	COMMAND ${CMAKE_COMMAND} -E tar "cvf" "archive.zip" -format=zip -- ${InstallList}
-	WORKING_DIR ${InstallDir}
-)
+	file(STRINGS ${ManifestFile} CONTENTS) 
+	set(InstallList "")
+	foreach(filepath ${CONTENTS})
+		file(RELATIVE_PATH filepath_rel ${RootDir} ${filepath})
+		list(APPEND InstallList ${filepath_rel})
+	endforeach()
+
+	execute_process(
+		COMMAND ${CMAKE_COMMAND} -E tar "cvf" ${args_OUTFILE} -format=zip -- ${InstallList}
+		WORKING_DIR ${RootDir}
+	)
+endfunction()
