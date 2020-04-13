@@ -49,20 +49,29 @@ function(TARGET_ADD_GITVERSION target)
 	endif()
 
 
-	set(VERSION
-	"const char* GIT_REV=\"${GIT_REV}${GIT_DIFF}\";
-	const char* GIT_TAG=\"${GIT_TAG}\";
-	const char* GIT_BRANCH=\"${GIT_BRANCH}\";")
+set(VERSION
+"extern const
+struct gitversion
+{
+	const char* revision;
+	const char* branch;
+	const char* tag;
+} GIT_VERSION{
+	.revision = \"${GIT_REV}${GIT_DIFF}\",
+	.branch = \"${GIT_BRANCH}\",
+	.tag = \"${GIT_TAG}\"
+};"
+)
 
 
-#if (EXISTS ${CMAKE_CURRENT_SOURCE_DIR}/version.cpp
-		#file(READ ${CMAKE_CURRENT_SOURCE_DIR}/version.cpp VERSION_)
-#else()
-		#set(VERSION_ "")
-#endif()
-#if (NOT "${VERSION}" STREQUAL "${VERSION_}")
-		#file(WRITE ${CMAKE_CURRENT_SOURCE_DIR}/version.cpp "${VERSION}")
-#endif()
+	if (EXISTS ${CMAKE_CURRENT_SOURCE_DIR}/version.cpp)
+			file(READ ${CMAKE_CURRENT_SOURCE_DIR}/version.cpp VERSION_)
+	else()
+			set(VERSION_ "")
+	endif()
+	if (NOT "${VERSION}" STREQUAL "${VERSION_}")
+			file(WRITE ${CMAKE_CURRENT_SOURCE_DIR}/version.cpp "${VERSION}")
+	endif()
 
 	message("${GIT_REV}")
 	message("${GIT_DIFF}")
