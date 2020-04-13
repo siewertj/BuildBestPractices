@@ -1,3 +1,4 @@
+message("----FOUND ME----")
 find_package(Git)
 message("${CMAKE_CURRENT_LIST_DIR}")
 
@@ -39,3 +40,7 @@ function (ADD_GITVERSION_FILE filename)
 		DEPENDS ${filename}_gitversion
 	)
 endfunction()
+
+find_package_handle_standard_args(GitVersion
+	REQUIRED_VARS GITVERSION_INCLUDE_DIRECTORIES
+)
