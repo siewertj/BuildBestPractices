@@ -5,7 +5,7 @@ message("${CMAKE_CURRENT_LIST_DIR}")
 set(GITVERSION_DIRECTORY "${CMAKE_CURRENT_LIST_DIR}")
 set(GITVERSION_INCLUDE_DIRECTORIES "${GITVERSION_DIRECTORY}/include")
 
-function (ADD_GITVERSION_FILE filename)
+function (GITVERSION_ADD_FILE filename)
 	set(flags "")
 	set(singleValues GIT_REPOSITORY)
 	set(multiValues "")
@@ -40,7 +40,3 @@ function (ADD_GITVERSION_FILE filename)
 		DEPENDS ${filename}_gitversion
 	)
 endfunction()
-
-find_package_handle_standard_args(GitVersion
-	REQUIRED_VARS GITVERSION_INCLUDE_DIRECTORIES
-)
