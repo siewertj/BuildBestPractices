@@ -44,14 +44,14 @@ struct gitversion
 };"
 )
 
-
-if (EXISTS ${CMAKE_CURRENT_SOURCE_DIR}/version.cpp)
-		file(READ ${CMAKE_CURRENT_SOURCE_DIR}/version.cpp VERSION_)
+#set(VERSION_FILE "${CMAKE_CURRENT_SOURCE_DIR}/${VERSION_FILE}")
+if (EXISTS "${VERSION_FILE}")
+		file(READ "${VERSION_FILE}" VERSION_)
 else()
 		set(VERSION_ "")
 endif()
 if (NOT "${VERSION}" STREQUAL "${VERSION_}")
-		file(WRITE ${CMAKE_CURRENT_SOURCE_DIR}/version.cpp "${VERSION}")
+		file(WRITE "${VERSION_FILE}" "${VERSION}")
 endif()
 
 message("${GIT_REV}")
@@ -59,4 +59,4 @@ message("${GIT_DIFF}")
 message("${GIT_TAG}")
 message("${GIT_BRANCH}")
 
-message("${VERSION}")
+message("created GitVersion file")
