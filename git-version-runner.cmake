@@ -1,5 +1,3 @@
-find_package(Git)
-
 if (Git_FOUND)
 
 # Call this function on a target to add version control to said target.
@@ -79,6 +77,4 @@ message("${GIT_BRANCH}")
 
 message("${VERSION}")
 
-else()
-message("git not found!")
 endif()

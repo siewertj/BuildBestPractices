@@ -4,6 +4,5 @@ project(BuildBestPractices)
 include (git-version.cmake)
 add_subdirectory(mylib)
 
-#add_custom_target(foo)
+ADD_GITVERSION_FILE(version.cpp)
 add_executable(foo main.cpp version.cpp)
-target_add_gitversion(foo)
