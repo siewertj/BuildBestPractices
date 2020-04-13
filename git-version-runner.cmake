@@ -1,26 +1,9 @@
-find_package(Git)
-if (Git_FOUND)
-
-# Call this function on a target to add version control to said target.
-set(prefix args)
-set(flags "")
-set(singleValues WORKING_DIRECTORY)
-set(multiValues "")
-
-include(CMakeParseArguments)
-cmake_parse_arguments(${prefix} "${flags}" "${singleValues}" "${multiValues}" ${ARGN})
-set(GIT_CMD "${GIT_EXECUTABLE}")
-if (NOT "${args_WORKING_DIRECTORY}" STREQUAL "")
-	list(APPEND GIT_CMD "-C ${args_WORKING_DIRECTORY}")
+if (NOT "${GIT_CMD}" STREQUAL "")
+	execute_process(COMMAND ${GIT_CMD} log --pretty=format:'%h' -n 1
+		OUTPUT_VARIABLE GIT_REV
+		ERROR_QUIET
+	)
 endif()
-
-# Processing of git args finished, now turn into actual command
-string(REPLACE ";" " " GIT_CMD "${GIT_CMD}")
-
-execute_process(COMMAND ${GIT_CMD} log --pretty=format:'%h' -n 1
-	OUTPUT_VARIABLE GIT_REV
-	ERROR_QUIET
-)
 
 if ("${GIT_REV}" STREQUAL "")
 		set(GIT_REV "N/A")
@@ -77,5 +60,3 @@ message("${GIT_TAG}")
 message("${GIT_BRANCH}")
 
 message("${VERSION}")
-
-endif()
