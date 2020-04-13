@@ -46,17 +46,12 @@ struct gitversion
 
 #set(VERSION_FILE "${CMAKE_CURRENT_SOURCE_DIR}/${VERSION_FILE}")
 if (EXISTS "${VERSION_FILE}")
-		file(READ "${VERSION_FILE}" VERSION_)
+	file(READ "${VERSION_FILE}" VERSION_)
 else()
-		set(VERSION_ "")
+	set(VERSION_ "")
 endif()
 if (NOT "${VERSION}" STREQUAL "${VERSION_}")
-		file(WRITE "${VERSION_FILE}" "${VERSION}")
+	file(WRITE "${VERSION_FILE}" "${VERSION}")
+	message(STATUS "created gitversion file '${VERSION_FILE}'")
 endif()
 
-message("${GIT_REV}")
-message("${GIT_DIFF}")
-message("${GIT_TAG}")
-message("${GIT_BRANCH}")
-
-message("created GitVersion file")
