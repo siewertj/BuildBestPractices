@@ -3,7 +3,7 @@ find_package(Git)
 if (Git_FOUND)
 
 # Call this function on a target to add version control to said target.
-function(TARGET_ADD_GITVERSION target)
+function(private_TARGET_ADD_GITVERSION target)
 	set(prefix args)
 	set(flags "")
 	set(singleValues WORKING_DIRECTORY)
@@ -79,7 +79,13 @@ struct gitversion
 	message("${GIT_BRANCH}")
 
 	message("${VERSION}")
+endfunction()
 
+function(TARGET_ADD_GITVERSION target)
+	add_custom_target(${target}_gitversion
+		COMMAND ${CMAKE_COMMAND} -P "${CMAKE_CURRENT_LIST_DIR}/git-version-runner.cmake"
+	)
+	#private_TARGET_ADD_GITVERSION(target)
 endfunction()
 
 else()
