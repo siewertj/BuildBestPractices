@@ -1,6 +1,6 @@
 find_package(Git)
 
-if (Git_FOUND)
+if (${Git_FOUND})
 
 function (ADD_GITVERSION_FILE filename)
 	add_custom_target(${filename}_gitversion
