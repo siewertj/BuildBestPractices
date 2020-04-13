@@ -1,4 +1,8 @@
 find_package(Git)
+message("${CMAKE_CURRENT_LIST_DIR}")
+
+set(GITVERSION_DIRECTORY "${CMAKE_CURRENT_LIST_DIR}")
+set(GITVERSION_INCLUDE_DIRECTORIES "${GITVERSION_DIRECTORY}/include")
 
 function (ADD_GITVERSION_FILE filename)
 	set(flags "")
@@ -26,7 +30,7 @@ function (ADD_GITVERSION_FILE filename)
 	add_custom_target(${filename}_gitversion
 		COMMAND ${CMAKE_COMMAND} 
 			-D GIT_CMD="${GIT_CMD}"
-			-P "${CMAKE_CURRENT_LIST_DIR}/git-version-runner.cmake"
+			-P "${GITVERSION_DIRECTORY}/_GitVersion.cmake"
 	)
 
 	# This is essentially a dummy command target so that we can link against the output
