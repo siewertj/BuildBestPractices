@@ -1,5 +1,5 @@
 if (NOT "${GIT_CMD}" STREQUAL "")
-	execute_process(COMMAND ${GIT_CMD} log --pretty=format:'%h' -n 1
+	execute_process(COMMAND ${GIT_CMD} log --pretty=format:%h -n 1
 		OUTPUT_VARIABLE GIT_REV
 		ERROR_QUIET
 	)
@@ -17,30 +17,30 @@ else()
 		set(GIT_DIFF "+")
 	endif()
 
-	execute_process(COMMAND ${GIT_CMD} describe -exact-match --tags
+	execute_process(COMMAND ${GIT_CMD} describe --exact-match --tags
 		OUTPUT_VARIABLE GIT_TAG ERROR_QUIET)
 	execute_process(COMMAND ${GIT_CMD} rev-parse --abbrev-ref HEAD
 		OUTPUT_VARIABLE GIT_BRANCH)
 
 	string(STRIP "${GIT_REV}" GIT_REV)
-	string(SUBSTRING "${GIT_REV}" 1 7 GIT_REV)
+	#string(SUBSTRING "${GIT_REV}" 1 7 GIT_REV)
 	string(STRIP "${GIT_DIFF}" GIT_DIFF)
 	string(STRIP "${GIT_TAG}" GIT_TAG)
 	string(STRIP "${GIT_BRANCH}" GIT_BRANCH)
 endif()
 
+string(TIMESTAMP BUILD_TIMESTAMP "%Y.%m.%d.%H:%M UTC" UTC)
 
 set(VERSION
-"extern const
-struct gitversion
-{
-	const char* revision;
-	const char* branch;
-	const char* tag;
-} GIT_VERSION{
+"#define GITVERSION_VERSION_COMPILATION_FILE
+#include <gitversion.h>
+
+extern const
+GIT_VERSION{
 	.revision = \"${GIT_REV}${GIT_DIFF}\",
 	.branch = \"${GIT_BRANCH}\",
-	.tag = \"${GIT_TAG}\"
+	.tag = \"${GIT_TAG}\",
+	.build_date = \"${BUILD_TIMESTAMP}\"
 };"
 )
 

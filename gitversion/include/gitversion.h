@@ -1,8 +1,12 @@
 #pragma once
-extern const
 struct gitversion
 {
 	const char* revision;
 	const char* branch;
 	const char* tag;
-} GIT_VERSION;
+	const char* build_date;
+}
+
+#ifndef GITVERSION_VERSION_COMPILATION_FILE
+extern const GIT_VERSION;
+#endif
